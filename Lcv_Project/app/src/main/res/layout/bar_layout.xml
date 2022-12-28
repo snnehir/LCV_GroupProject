@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/toolbar"
+    android:background="@android:color/transparent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:text="LCV"
+
+        android:layout_gravity="center"
+        android:fontFamily="@font/bauhs93"
+        android:textColor="#000000"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:visibility="invisible"
+        android:layout_gravity="end"
+        android:id="@+id/bar_layout_relaNotif">
+
+        <ImageView
+            android:id="@+id/bar_layout_imgNotig"
+            android:layout_width="47dp"
+            android:layout_height="37dp"
+            android:src="@drawable/ic_notif" />
+        <TextView
+            android:id="@+id/bar_layout_txtBildirimSayisi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/bar_layout_imgNotig"
+            android:layout_alignBottom="@+id/bar_layout_imgNotig"
+            android:textColor="#FF0000"
+            android:textSize="11sp"/>
+    </RelativeLayout>
+
+</androidx.appcompat.widget.Toolbar>
