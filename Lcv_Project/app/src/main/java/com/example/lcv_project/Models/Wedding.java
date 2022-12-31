@@ -1,30 +1,13 @@
-package com.example.lcv_project.Models;
+package com.example.lcv_project.models;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class Wedding {
-    private String KanalId;
-    private String KullaniciId;
-
- public Wedding(String KanalId, String KullaniciId){
-    this.KanalId=KanalId;
-    this.KullaniciId=KullaniciId;
- }
-  public Wedding() {
-
-  }
-    public String getKanalId() {
-
-        return KanalId;
-    }
-
-    public void setKanalId(String KanalId) {
-        this.KanalId = KanalId;
-    }
-    public String getKullaniciId() {
-
-        return KullaniciId;
-    }
-
-    public void setKayitKullaniciadi(String KullaniciId) {
-        this.KullaniciId = KullaniciId;
-    }
+    private int weddingId;
+    private String bride, groom, weddingName, weddingLocation, weddingDetails, invitationImg;
+    private int tableCapacity; // number of guests can be sit on a table
+    private int numberOfTables; // number of tables in wedding area
+    private int accompanier;
+    private Date weddingStart, weddingEnd;
 }

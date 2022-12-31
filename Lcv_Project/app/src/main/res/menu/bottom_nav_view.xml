@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/bottom_nav_ic_innvitation"
+        android:id="@+id/bottom_nav_create_invitation"
         android:icon="@drawable/ic_invitation"
         android:title="Create Invitation"/>
     <item
-        android:id="@+id/bottom_nav_ic_arrivals"
-        android:icon="@drawable/ic_arrivals"
-        android:title="Invitation Details"/>
+        android:id="@+id/bottom_nav_search"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="Search People"/>
     <item
-        android:id="@+id/bottom_nav_ic_profile"
+        android:id="@+id/bottom_nav_invitations"
+        android:icon="@drawable/ic_arrivals"
+        android:title="Invitations"/>
+    <item
+        android:id="@+id/bottom_nav_profile"
         android:icon="@drawable/ic_account"
-        android:title="Invitation Details"/>
+        android:title="My Profile"/>
 </menu>

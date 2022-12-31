@@ -1,88 +1,68 @@
 package com.example.lcv_project;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.lcv_project.adapter.DBAdapter;
+import com.example.lcv_project.models.User;
 
+// Login page
 public class MainActivity extends AppCompatActivity {
-    Button btnKayit;
-    private FirebaseAuth mAuth;
-    private EditText Kullaniciadi,Parola;
-    private String txtKullaniciadi, txtParola;
-    private FirebaseUser mUser;
-    private void init(){
-        mAuth=FirebaseAuth.getInstance();
-        Kullaniciadi=(EditText) findViewById(R.id.Kullaniciadi);
-        Parola=(EditText) findViewById(R.id.Parola);
-        mUser=mAuth.getCurrentUser();
 
-    }
+    Button btnLogin, btnSignup;
+    EditText username_or_mail, password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // hide title bar
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
-        init();
-        tanimlama();
-       /* if(mUser !=null){
-            finish();
-            startActivity(new Intent(MainActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-        }*/
 
+        btnLogin = findViewById(R.id.btnLogin);
+        btnSignup = findViewById(R.id.btnSignup);
+        username_or_mail = findViewById(R.id.username_or_mail);
+        password = findViewById(R.id.password);
 
-        btnKayit.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent KayitOl = new Intent(getApplicationContext(), MainRegister.class);
-                startActivity(KayitOl);
-            }
-        });
+        /* clear db
+        DBAdapter db = new DBAdapter(this);
+        db.open();
+        db.clearTable();
+        System.out.println(" ================= Kullanıcılar temizlendi.");
+        db.close();
+        */
     }
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.btnLogin:
+                //Toast.makeText(MainActivity.this, "Login attempt", Toast.LENGTH_SHORT).show();
+                String username_or_mail = this.username_or_mail.getText().toString().isEmpty() ? "" : this.username_or_mail.getText().toString();
+                String password = this.password.getText().toString().isEmpty() ? "" : this.password.getText().toString();
+                System.out.println(" =================== username: " + username_or_mail);
+                System.out.println(" =================== password: " + password);
+                DBAdapter db = new DBAdapter(this);
+                db.open();
+                User user = db.loginUser(username_or_mail, password);
+                if(user == null){
+                    Toast.makeText(MainActivity.this, "Login fail.", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(MainActivity.this, "Login success.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(this, CreateInvitationActivity.class));
+                }
+                db.close();
+                break;
+            case R.id.btnSignup:
+                startActivity(new Intent(this, SignUpActivity.class));
+                break;
 
-    public void tanimlama() {
-        btnKayit = findViewById(R.id.btnKayit);
-    }
-    ///Giriş yap
-    public void btnGirisYap(View v) {
-
-        txtKullaniciadi=Kullaniciadi.getText().toString();
-        txtParola=Parola.getText().toString();
-
-        if(!TextUtils.isEmpty(txtKullaniciadi)){
-            if(!TextUtils.isEmpty(txtParola)){
-                mAuth.signInWithEmailAndPassword(txtKullaniciadi, txtParola)
-                        .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()){
-
-                                    if((txtKullaniciadi.equals("admin@gmail.com")) && (txtParola.equals("admin123"))){
-                                        startActivity(new Intent(MainActivity.this, AdminMain.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-
-                                    }else {
-                                        startActivity( new Intent( MainActivity.this, MainWelcome.class ).setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP ) );
-                                    }
-                                    Toast.makeText(MainActivity.this, "Başarıyla giriş yaptınız", Toast.LENGTH_SHORT).show();
-                                    finish();
-
-                                }else Toast.makeText(MainActivity.this, "Giriş Başarılı değil", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-            }else Toast.makeText(MainActivity.this, "Lütfen geçerli bir şifre giriniz", Toast.LENGTH_SHORT).show();
-        }else Toast.makeText(MainActivity.this, "Lütfen geçerli bir mail adresi giriniz", Toast.LENGTH_SHORT).show();
-
+        }
     }
 }
-
