@@ -9,12 +9,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.lcv_project.models.User;
+import com.example.lcv_project.models.UserListItem;
+
+import java.util.ArrayList;
 
 
 public class DBAdapter {
     static final String TAG = "DBAdapter";
     static final String DATABASE_NAME = "Lcv_Project";
-    static final int DATABASE_VERSION = 1;
+    static final int DATABASE_VERSION = 2;
 
     // tables
 
@@ -28,8 +31,12 @@ public class DBAdapter {
 
     static final String DATABASE_CREATE_USER =
                     "    create table " + DATABASE_USER_TABLE +
-                    "    (_id integer primary key autoincrement, full_name text, username text unique, " +
-                    "    mail text unique, password text)";
+                    "    (_id integer primary key autoincrement, " +
+                    "    full_name text, " +
+                    "    username text unique not null, " +
+                    "    mail text unique not null, " +
+                    "    password text not null, " +
+                    "    profile_img_url text)";
     static final String DATABASE_CREATE_FRIEND =
                     "    CREATE TABLE " + DATABASE_FRIEND_TABLE +
                     "    (_id INTEGER PRIMARY KEY autoincrement,\n" +
@@ -141,7 +148,7 @@ public class DBAdapter {
         User user = null;
         if (cursor.moveToFirst()) {
             user = new User(cursor.getInt(0), cursor.getString(1),
-                            cursor.getString(2), cursor.getString(3), cursor.getString(4) );
+                            cursor.getString(2), cursor.getString(3), cursor.getString(4), "");
             System.out.println(" ====================== login user: " + user);
             cursor.close();
         }
@@ -151,9 +158,60 @@ public class DBAdapter {
         return user;
     }
 
+    public ArrayList<UserListItem> getSearchedUsers(String filter, boolean friends_only, int user_id){
+        String f = filter.isEmpty() ? "'%%'" : "'%" + filter + "%'"; // todo: string builder
+        String query =  "SELECT u.full_name, u.username, u.mail, u.profile_img_url, " +
+                        "       CASE\n" +
+                        "           WHEN f.user_id IS NOT NULL THEN 1\n" +
+                        "           ELSE 0\n" +
+                        "       END AS is_friend\n" +
+                        "FROM " + DATABASE_USER_TABLE + " u\n" +
+                        "LEFT JOIN " + DATABASE_FRIEND_TABLE + " f\n" +
+                        "    ON u._id = f.friend_id\n" +
+                        "    AND f.user_id = ? \n WHERE u._id <> ? and u.full_name like " + f;
+        if(friends_only){
+            query += " and is_friend = 1";
+        }
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(user_id), String.valueOf(user_id)});
+
+        ArrayList<UserListItem> userList = new ArrayList<>();
+        // loop through the result set and add each row to the list
+        while (cursor.moveToNext()) {
+            // System.out.println("============= elements: " + cursor.getString(0));
+            userList.add(new UserListItem(
+                    cursor.getString(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getInt(4)
+            ));
+        }
+        return userList;
+
+    }
+
     // clears all user data
     public void clearTable() throws SQLException
     {
         db.execSQL("DELETE FROM " + DATABASE_USER_TABLE);
+        db.execSQL("DELETE FROM " + DATABASE_FRIEND_TABLE);
+    }
+
+    // creates fake data
+    public void createFakeData() throws SQLException{
+        db.execSQL("INSERT INTO users (_id, username, password, mail, full_name, profile_img_url)\n" +
+                "VALUES \n" +
+                "  (1, 'hkbyrktr', 'password', 'user1@example.com', 'Hatice Kubra Bayraktar', null),\n" +
+                "  (2, 'selcans', 'password', 'user2@example.com', 'Selcan Sarıarslan', null),\n" +
+                "  (3, 'muq_the_star', 'password', 'user3@example.com', 'Muqadasa Sherani', null),\n" +
+                "  (4, 'mumbi_r', 'password', 'user4@example.com', 'Regina Mumbi Gachomba', null),\n" +
+                "  (5, 'snur21', 'qwerty', 'snur21@mail.com', 'Sumeyye Nur Nehir', null),\n" +
+                "  (6, 'theq', 'password', 'user6@example.com', 'Ji Chang Min', null),\n" +
+                "  (7, 'm_akbas', 'password', 'user7@example.com', 'Mustafa Akbaş', null),\n" +
+                "  (8, 'jia', 'password', 'user8@example.com', 'Jia Chang', null),\n" +
+                "  (9, 'serhan35', 'password', 'user9@example.com', 'Serhan Günaç', null),\n" +
+                "  (10, 'hjkim99', 'password', 'user10@example.com', 'Hongjoong Kim', null),\n" +
+                "  (11, 'mr_chalamet', 'password', 'user11@example.com', 'Timothée Chalamet', 'timothee');\n");
+        db.execSQL("INSERT INTO friends (_id, user_id, friend_id) values (1, 5, 1), (2, 5, 2), (3, 5, 3), (4, 5, 4)");
     }
 }

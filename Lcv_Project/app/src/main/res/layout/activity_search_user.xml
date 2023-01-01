@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateInvitationActivity">
+    tools:context=".CreateInvitationActivity"
+    android:background="@color/white">
     <include
         android:id="@+id/toolbar"
         layout="@layout/bar_layout"/>
@@ -21,9 +22,10 @@
             android:id="@+id/search_section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            >
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginLeft="20dp">
             <EditText
                 android:id="@+id/searchEt"
                 android:layout_width="wrap_content"
@@ -31,6 +33,7 @@
                 android:layout_centerVertical="true"
                 android:hint="Search user"
                 android:background="@color/white"
+                android:textColorHint="@color/black_500"
                 android:textColor="@color/black"
 
                 />
@@ -44,19 +47,40 @@
                 android:layout_alignParentRight="true" />
         </RelativeLayout>
         <CheckBox
+            android:id="@+id/friends_only"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:text="Show only my friends"/>
-        <ListView
-            android:id="@+id/listView2"
+            android:layout_marginStart="14dp"
+            android:text="Show only my friends"
+            android:textColor="@color/black_500"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="10dp" />
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            />
+            android:layout_height="wrap_content">
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/invite_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Invite"
+                android:layout_gravity="bottom|right"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:onClick="onClick"
+                >
+
+            </androidx.appcompat.widget.AppCompatButton>
+        </FrameLayout>
+
+
     </LinearLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
@@ -65,6 +89,7 @@
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav_view"
         app:itemIconTint="@color/selected"
-        app:itemTextColor="@color/unselected"/>
+        app:itemTextColor="@color/unselected"
+        android:background="@color/white"/>
 
 </RelativeLayout>

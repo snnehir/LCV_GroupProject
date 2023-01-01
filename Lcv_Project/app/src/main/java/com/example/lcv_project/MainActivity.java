@@ -31,13 +31,16 @@ public class MainActivity extends AppCompatActivity {
         username_or_mail = findViewById(R.id.username_or_mail);
         password = findViewById(R.id.password);
 
-        /* clear db
+        /* clear db*/
         DBAdapter db = new DBAdapter(this);
         db.open();
         db.clearTable();
-        System.out.println(" ================= Kullanıcılar temizlendi.");
+        // create fake data TODO: wedding
+        db.createFakeData();
         db.close();
-        */
+
+
+
     }
     public void onClick(View view){
         switch (view.getId()){

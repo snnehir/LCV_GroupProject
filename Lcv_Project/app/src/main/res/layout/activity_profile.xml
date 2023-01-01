@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateInvitationActivity">
+    tools:context=".CreateInvitationActivity"
+    android:background="@color/white">
     <include
         android:id="@+id/toolbar"
         layout="@layout/bar_layout"/>
@@ -32,6 +33,7 @@
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav_view"
         app:itemIconTint="@color/selected"
-        app:itemTextColor="@color/unselected"/>
+        app:itemTextColor="@color/unselected"
+        android:background="@color/white"/>
 
 </RelativeLayout>
