@@ -1,4 +1,4 @@
-package com.example.lcv_project.models;
+package com.example.lcv_project.Models;
 
 // NtoM relation
 public class WeddingGuest {

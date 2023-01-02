@@ -1,4 +1,4 @@
-package com.example.lcv_project.adapter;
+package com.example.lcv_project.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,8 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.lcv_project.Models.UserListItem;
 import com.example.lcv_project.R;
-import com.example.lcv_project.models.UserListItem;
 
 import java.util.ArrayList;
 

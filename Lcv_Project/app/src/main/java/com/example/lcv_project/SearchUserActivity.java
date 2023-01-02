@@ -1,5 +1,7 @@
 package com.example.lcv_project;
 
+import static com.example.lcv_project.MainActivity.logged_in_user;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,10 +29,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.lcv_project.adapter.CustomAdapter;
-import com.example.lcv_project.adapter.DBAdapter;
-import com.example.lcv_project.models.User;
-import com.example.lcv_project.models.UserListItem;
+import com.example.lcv_project.Adapter.CustomAdapter;
+import com.example.lcv_project.Adapter.DBAdapter;
+import com.example.lcv_project.Models.User;
+import com.example.lcv_project.Models.UserListItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -85,7 +87,7 @@ public class SearchUserActivity extends AppCompatActivity {
         ArrayList<UserListItem> userList;
         DBAdapter db = new DBAdapter(this);
         db.open();
-        userList = db.getSearchedUsers("", false,5);
+        userList = db.getSearchedUsers("", false, logged_in_user.getUserId());
         db.close();
         CustomAdapter customAdapter = new CustomAdapter(this, R.layout.user_list_item, userList);
         listView = findViewById(R.id.listView);
@@ -142,7 +144,7 @@ public class SearchUserActivity extends AppCompatActivity {
                 ArrayList<UserListItem> userList;
                 DBAdapter db = new DBAdapter(this);
                 db.open();
-                userList = db.getSearchedUsers(full_name, friends_only.isChecked(), 5);
+                userList = db.getSearchedUsers(full_name, friends_only.isChecked(), logged_in_user.getUserId());
                 db.close();
                 CustomAdapter customAdapter = new CustomAdapter(this, R.layout.user_list_item, userList);
                 listView = findViewById(R.id.listView);

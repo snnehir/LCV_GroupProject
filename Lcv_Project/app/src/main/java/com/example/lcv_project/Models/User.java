@@ -1,4 +1,4 @@
-package com.example.lcv_project.models;
+package com.example.lcv_project.Models;
 
 public class User {
     private int userId;
@@ -12,7 +12,7 @@ public class User {
         this.profile_picture_url = profile_img_url;
     }
 
-    public User(int userId, String full_name, String username, String mail, String password, String profile_img_url) {
+    public User(int userId, String full_name, String username, String mail, String profile_img_url) {
         this.userId = userId;
         this.full_name = full_name;
         this.username = username;
@@ -28,6 +28,9 @@ public class User {
         this.profile_picture_url = profile_picture_url;
     }
 
+    public User(){
+
+    }
     public int getUserId() {
         return userId;
     }
