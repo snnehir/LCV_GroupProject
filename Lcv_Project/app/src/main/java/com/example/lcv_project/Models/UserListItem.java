@@ -1,5 +1,6 @@
 package com.example.lcv_project.Models;
 
+
 public class UserListItem extends User{
     private boolean is_friend;
     public UserListItem(String fullName, String username, String mail, String profile_picture_url, int friend_status) {

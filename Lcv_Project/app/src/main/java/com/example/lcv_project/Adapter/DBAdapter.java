@@ -186,6 +186,7 @@ public class DBAdapter {
                     cursor.getInt(4)
             ));
         }
+        cursor.close();
         return userList;
 
     }
