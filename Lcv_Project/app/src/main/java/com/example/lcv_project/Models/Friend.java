@@ -1,4 +1,4 @@
-package com.example.lcv_project.models;
+package com.example.lcv_project.Models;
 
 public class Friend {
     private int userId;

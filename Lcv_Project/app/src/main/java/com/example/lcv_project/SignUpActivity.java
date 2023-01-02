@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.lcv_project.adapter.DBAdapter;
-import com.example.lcv_project.models.User;
+import com.example.lcv_project.Adapter.DBAdapter;
+import com.example.lcv_project.Models.User;
 
 public class SignUpActivity extends AppCompatActivity {
     Button btnLogin, btnSignup;

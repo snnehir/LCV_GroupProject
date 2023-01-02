@@ -1,4 +1,4 @@
-package com.example.lcv_project.adapter;
+package com.example.lcv_project.Adapter;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.lcv_project.models.User;
-import com.example.lcv_project.models.UserListItem;
+import com.example.lcv_project.Models.User;
+import com.example.lcv_project.Models.UserListItem;
 
 import java.util.ArrayList;
 
@@ -148,7 +148,7 @@ public class DBAdapter {
         User user = null;
         if (cursor.moveToFirst()) {
             user = new User(cursor.getInt(0), cursor.getString(1),
-                            cursor.getString(2), cursor.getString(3), cursor.getString(4), "");
+                            cursor.getString(2), cursor.getString(3), cursor.getString(4));
             System.out.println(" ====================== login user: " + user);
             cursor.close();
         }

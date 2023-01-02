@@ -7,12 +7,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class InvitationsActivity extends AppCompatActivity {
+
+    Button seatReservationBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,17 @@ public class InvitationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_invitations);
 
         Context ctx = this;
+
+        seatReservationBtn = findViewById(R.id.seat_reservation_button);
+        seatReservationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ctx, SeatReservationActivity.class));
+            }
+        });
+
+
+        //bottom navigation bar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.bottom_nav_invitations);
         // Set an OnNavigationItemSelectedListener on the BottomNavigationView

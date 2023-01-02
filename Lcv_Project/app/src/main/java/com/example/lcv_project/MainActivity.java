@@ -10,12 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.lcv_project.adapter.DBAdapter;
-import com.example.lcv_project.models.User;
+import com.example.lcv_project.Adapter.DBAdapter;
+import com.example.lcv_project.Models.User;
 
 // Login page
 public class MainActivity extends AppCompatActivity {
 
+    public static User logged_in_user = new User();
     Button btnLogin, btnSignup;
     EditText username_or_mail, password;
     @Override
@@ -52,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(" =================== password: " + password);
                 DBAdapter db = new DBAdapter(this);
                 db.open();
-                User user = db.loginUser(username_or_mail, password);
-                if(user == null){
+                logged_in_user = db.loginUser(username_or_mail, password);
+                if(logged_in_user == null){
                     Toast.makeText(MainActivity.this, "Login fail.", Toast.LENGTH_SHORT).show();
                 }
                 else{

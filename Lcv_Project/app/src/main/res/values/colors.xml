@@ -10,7 +10,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="constantColor">#28012E</color>
     <color name="edittextColor">#F7F6F8</color>
-    <color name="buttonColor">#4F025C</color>
+    <color name="buttonColor">#5B2D63</color>
     <!-- admin main color-->
     <color name="unselected">#BABABA</color>
     <color name="selected">#4F025C</color>

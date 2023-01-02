@@ -16,15 +16,111 @@
         android:id="@+id/MainAdmin_frameLayout"
         android:orientation="vertical"
         android:layout_above="@+id/bottom_navigation"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create Invitation"
-            android:layout_gravity="center">
+            android:text="Add Invitation"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="22dp"
+            android:textStyle="bold">
 
         </TextView>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter Invitation Title"
+            android:textColorHint="@color/black_500"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:layout_gravity="center"
+            >
+        </EditText>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="Wedding date:"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:textSize="18dp"/>
+
+            <EditText
+                android:id="@+id/date_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:hint="Select date of wedding"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/text"
+                android:textSize="18dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="Wedding time:"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:textSize="18dp"/>
+            <EditText
+                android:id="@+id/start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:hint="Start Time"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:layout_toRightOf="@+id/text2"
+                />
+            <TextView
+                android:id="@+id/line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="—"
+                android:layout_toRightOf="@+id/start_time"
+                android:layout_centerVertical="true">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:hint="End Time"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:layout_toRightOf="@+id/line"
+                />
+
+        </RelativeLayout>
+
+
+
     </LinearLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
