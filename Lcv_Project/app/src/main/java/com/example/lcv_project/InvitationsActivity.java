@@ -10,13 +10,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.lcv_project.Adapter.InvitationListAdapter;
+import com.example.lcv_project.Models.Wedding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.ArrayList;
+
 public class InvitationsActivity extends AppCompatActivity {
 
-    Button seatReservationBtn;
+    //Button seatReservationBtn;
+    Button attendBtn;
+    Button notAttendBtn;
+    Button viewDetailBtn;
+    TextView weddingNameTv;
+    ListView invitationList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +37,19 @@ public class InvitationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_invitations);
 
         Context ctx = this;
+
+        invitationList = findViewById(R.id.list_view_invitations);
+        //add data from db to the listview
+        ArrayList<Wedding> weddingsArraylist = new ArrayList<>();
+
+
+        //we make custom adapter fro listvew
+        InvitationListAdapter invitationListAdapter = new InvitationListAdapter(ctx, R.layout.invitation_list_data, weddingsArraylist);
+        invitationList.setAdapter(invitationListAdapter);
+        invitationList.setChoiceMode(invitationList.CHOICE_MODE_SINGLE);
+
+        /*
+        -----------------------seat reservation button-------------------------
 
         seatReservationBtn = findViewById(R.id.seat_reservation_button);
         seatReservationBtn.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +87,6 @@ public class InvitationsActivity extends AppCompatActivity {
                 return true;
             }
         });
-
+        */
     }
 }
