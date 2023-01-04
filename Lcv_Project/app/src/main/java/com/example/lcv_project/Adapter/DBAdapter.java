@@ -306,11 +306,11 @@ public class DBAdapter {
 
     //create fake wedding data
     public void createFakeWeddingData(){
-        db.execSQL("INSERT INTO "+DATABASE_WEDDING_TABLE+" (_id, wedding_name, wedding_location, wedding_details, bride, groom, invitation_img, accompanier, wedding_start, wedding_end)\n"+
+        db.execSQL("INSERT INTO "+DATABASE_WEDDING_TABLE+" (_id, wedding_name, wedding_location, wedding_details, bride, groom, accompanier, wedding_start, wedding_end)\n"+
                 "VALUES \n" +
-                "(1, 'Mehmet and Ayse', 'Ankara', 'No pets and non-alcohalic wedding', 'Ayse Bayraktar', 'Mehmet Burak', null, 1, 2023-01-20, 2023-01-21),\n" +
-                "(2, 'Cansu and Tayfur', 'Izmir', 'Alcohalic wedding, black and white theme', 'Cansu Bahar', 'Tayfur Sen', null, 2, 2023-06-01, 2023-06-05),\n" +
-                "(3, 'Feyza and Koray', 'Istanbul', 'Non-alcohalic wedding, No children', 'Feyza Korkmaz', 'Koray Celik', null, 0, 2023-05-25, 2023-05-26);\n");
+                "(1, 'Mehmet and Ayse', 'Ankara', 'No pets and non-alcohalic wedding', 'Ayse Bayraktar', 'Mehmet Burak', 1, 2023-01-20, 2023-01-21),\n" +
+                "(2, 'Cansu and Tayfur', 'Izmir', 'Alcohalic wedding, black and white theme', 'Cansu Bahar', 'Tayfur Sen', 2, 2023-06-01, 2023-06-05),\n" +
+                "(3, 'Feyza and Koray', 'Istanbul', 'Non-alcohalic wedding, No children', 'Feyza Korkmaz', 'Koray Celik', 0, 2023-05-25, 2023-05-26);\n");
     }
 
     //create fake wedding owner data
@@ -362,7 +362,7 @@ public class DBAdapter {
             System.out.println("WEDDING ID: " + cursor_w.getInt(0));
             System.out.println("WEDDING NAME: " + cursor_w.getString(1));
         }
-        String query = " select w._id, w.bride, w.groom, w.wedding_name, w.wedding_location, w.wedding_details, w.invitation_img, " +
+        String query = " select w._id, w.bride, w.groom, w.wedding_name, w.wedding_location, w.wedding_details, " +
                 " w.accompanier, w.wedding_start, w.wedding_end from " + DATABASE_WEDDING_TABLE + " as w left join " + DATABASE_WEDDING_GUEST_TABLE
                 + " as wg on w._id = wg.wedding_id where wg.user_id = ?";
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(user_id)});
@@ -375,10 +375,9 @@ public class DBAdapter {
                     cursor.getString(3),
                     cursor.getString(4),
                     cursor.getString(5),
-                    cursor.getString(6),
-                    cursor.getInt(7),
-                    cursor.getString(8),
-                    cursor.getString(9)
+                    cursor.getInt(6),
+                    cursor.getString(7),
+                    cursor.getString(8)
             );
             //weddingName.add(wedding.getWedding_name());
             weddingName.add(wedding);
