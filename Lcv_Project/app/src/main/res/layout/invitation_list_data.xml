@@ -4,40 +4,39 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/invitation_list_data_TV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"/>
+        <TextView
+            android:id="@+id/invitation_list_data_TV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/invitation_list_view_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="View Detail"
-        android:background="@color/constantColor"
-        android:textColor="@color/white"
-        android:padding="10dp"
-        android:textAllCaps="false"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/invitation_list_attend_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Attend"
+            android:focusable="false"
+            android:background="@color/constantColor"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:textAllCaps="false"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/invitation_list_attend_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Attend"
-        android:background="@color/constantColor"
-        android:textColor="@color/white"
-        android:padding="10dp"
-        android:textAllCaps="false"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/invitation_list_not_attend_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Not Attend"
+            android:focusable="false"
+            android:background="@color/constantColor"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:textAllCaps="false"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/invitation_list_not_attend_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Not Attend"
-        android:background="@color/constantColor"
-        android:textColor="@color/white"
-        android:padding="10dp"
-        android:textAllCaps="false"/>
 
 </LinearLayout>

@@ -161,6 +161,10 @@ public class CreateInvitationActivity extends AppCompatActivity {
         date_picker.setText(dateFormat.format(myCalendar.getTime()));
     }
 
+<<<<<<< HEAD
+    public void onClick(View view) {
+    }
+=======
     public void onClick(View view){
         switch (view.getId()){
             case R.id.save_btn:
@@ -194,4 +198,5 @@ public class CreateInvitationActivity extends AppCompatActivity {
 
 
 
+>>>>>>> origin/master
 }
