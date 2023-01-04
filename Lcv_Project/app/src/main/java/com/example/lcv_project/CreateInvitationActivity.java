@@ -1,41 +1,71 @@
 package com.example.lcv_project;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import static com.example.lcv_project.MainActivity.logged_in_user;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.lcv_project.Adapter.DBAdapter;
+import com.example.lcv_project.Models.Wedding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class CreateInvitationActivity extends AppCompatActivity {
 
+    private final int REQUEST_CODE_SELECT_IMAGE = 1;
+    Uri invitationImageUri;
+    Context ctx;
     final Calendar myCalendar= Calendar.getInstance();
-    EditText editText, startTime;
+    EditText date_picker, startTime, endTime, name, bride, groom, location, details,
+            numberOfAccompanier;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_create_invitation);
-        Context ctx = this;
 
-        editText=(EditText) findViewById(R.id.date_picker);
-        DatePickerDialog.OnDateSetListener date =new DatePickerDialog.OnDateSetListener() {
+        /* Context ctx2 = getApplicationContext();
+        Configuration.getInstance().load(ctx2, PreferenceManager.getDefaultSharedPreferences(ctx2)); */
+        setContentView(R.layout.activity_create_invitation);
+        ctx = this;
+
+        name = findViewById(R.id.name);
+        bride = findViewById(R.id.bride_name);
+        groom = findViewById(R.id.groom_name);
+        details = findViewById(R.id.detail);
+        location = findViewById(R.id.location);
+        numberOfAccompanier = findViewById(R.id.accompanier);
+
+        date_picker =(EditText) findViewById(R.id.date_picker);
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 myCalendar.set(Calendar.YEAR, year);
@@ -44,7 +74,7 @@ public class CreateInvitationActivity extends AppCompatActivity {
                 updateLabel();
             }
         };
-        editText.setOnClickListener(new View.OnClickListener() {
+        date_picker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new DatePickerDialog(ctx, date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -64,6 +94,27 @@ public class CreateInvitationActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         startTime.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+
+            }
+        });
+
+        endTime = findViewById(R.id.end_time);
+        endTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Calendar currentTime = Calendar.getInstance();
+                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = currentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(ctx, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        endTime.setText( selectedHour + ":" + selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -98,12 +149,94 @@ public class CreateInvitationActivity extends AppCompatActivity {
             }
         });
 
-        // TODO AŞKIM
     }
     private void updateLabel(){
 
         SimpleDateFormat dateFormat=new SimpleDateFormat("EEEE, MMMM d, yyyy", Locale.US);
-        editText.setText(dateFormat.format(myCalendar.getTime()));
+        date_picker.setText(dateFormat.format(myCalendar.getTime()));
     }
+
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.add_image_btn:
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_CODE_SELECT_IMAGE);
+                break;
+            case R.id.save_btn:
+                // save the image to the internal storage
+                String wedding_name = name.getText().toString();
+                if(wedding_name == null || wedding_name.isEmpty()){
+                    Toast.makeText(ctx, "Invitation name cannot be empty.", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                String weddingStart = date_picker.getText().toString() + " " + startTime.getText().toString();
+                String weddingEnd = date_picker.getText().toString() + " " + endTime.getText().toString();
+                String bride_name = bride.getText().toString();
+                String groom_name = groom.getText().toString();
+                String location_str = location.getText().toString();
+                String details_str = details.getText().toString();
+                int accompanier_num = Integer.parseInt(numberOfAccompanier.getText().toString().isEmpty() ? "0" : numberOfAccompanier.getText().toString());
+                String invitation_img_url = "";
+                System.out.println("IMG URI: " + invitationImageUri);
+                if(invitationImageUri != null){
+                    try (InputStream inputStream = getContentResolver().openInputStream(invitationImageUri)) {
+                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        File imageFile = new File(getFilesDir(), wedding_name + "_invitation_img.jpg");
+                        System.out.println(" ========================> img: " +imageFile.getPath());
+                        // save to db
+                        invitation_img_url = imageFile.getPath();
+
+                        try (FileOutputStream fos = new FileOutputStream(imageFile)) {
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                Wedding wedding = new Wedding(bride_name, groom_name, wedding_name, location_str,
+                                              details_str, invitation_img_url, accompanier_num,
+                                              weddingStart, weddingEnd);
+                DBAdapter db = new DBAdapter(ctx);
+                db.open();
+                db.addWedding(wedding, logged_in_user.getUserId());
+                db.close();
+                Toast.makeText(ctx, "Invitation is created!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ctx, MyInvitations.class));
+                break;
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SELECT_IMAGE && resultCode == RESULT_OK && data != null) {
+            // get the selected image
+            invitationImageUri = data.getData();
+            // display the image
+            ImageView imageView = findViewById(R.id.invitation_img);
+            imageView.setImageURI(invitationImageUri);
+            /*
+            // save the image to the internal storage
+            try (InputStream inputStream = getContentResolver().openInputStream(imageUri)) {
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                File imageFile = new File(getFilesDir(), "image.jpg");
+                System.out.println(" ========================> img: " +imageFile.getPath());
+                try (FileOutputStream fos = new FileOutputStream(imageFile)) {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            */
+        }
+    }
+
+
 
 }

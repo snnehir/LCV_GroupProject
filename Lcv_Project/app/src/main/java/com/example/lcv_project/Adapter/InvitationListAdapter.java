@@ -32,7 +32,7 @@ public class InvitationListAdapter extends ArrayAdapter<Wedding> {
 
         TextView weddingNameTV = convertView.findViewById(R.id.invitation_list_data_TV);
 
-        weddingNameTV.setText(wedding.getWeddingName());
+        weddingNameTV.setText(wedding.getWedding_name());
 
         return super.getView(position, convertView, parent);
     }
