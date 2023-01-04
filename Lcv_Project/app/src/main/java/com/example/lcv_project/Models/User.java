@@ -2,7 +2,11 @@ package com.example.lcv_project.Models;
 
 public class User {
     private int userId;
-    private String full_name, username, mail, password, profile_picture_url;
+    private static String full_name;
+    private static String username;
+    private String mail;
+    private String password;
+    private String profile_picture_url;
 
     public User(String fullName, String username, String mail, String password, String profile_img_url) {
         this.full_name = fullName;
@@ -35,11 +39,9 @@ public class User {
         return userId;
     }
 
-    public String getFull_name() {
-        return full_name;
-    }
+    public static String getFull_name() {return full_name;}
 
-    public String getUsername() {
+    public static String getUsername() {
         return username;
     }
 

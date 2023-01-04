@@ -57,4 +57,7 @@ public class CustomAdapter extends ArrayAdapter<UserListItem> {
 
         return convertView;
     }
+
+
+
 }

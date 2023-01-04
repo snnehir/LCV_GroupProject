@@ -106,4 +106,6 @@ public class CreateInvitationActivity extends AppCompatActivity {
         editText.setText(dateFormat.format(myCalendar.getTime()));
     }
 
+    public void onClick(View view) {
+    }
 }
