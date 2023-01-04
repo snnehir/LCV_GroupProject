@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         db.clearTable();
         // create fake data TODO: wedding
         db.createFakeData();
+        db.createFakeWeddingData();
+        db.createFakeWeddingGuests();
+        db.createFakeWeddingOwner();
         db.close();
 
 

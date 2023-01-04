@@ -305,4 +305,89 @@ public class DBAdapter {
                 "  (11, 'mr_chalamet', 'password', 'user11@example.com', 'Timothée Chalamet', 'timothee');\n");
         db.execSQL("INSERT INTO friends (_id, user_id, friend_id) values (1, 5, 1), (2, 5, 2), (3, 5, 3), (4, 5, 4)");
     }
+
+    //create fake wedding data
+    public void createFakeWeddingData(){
+        db.execSQL("INSERT INTO "+DATABASE_WEDDING_TABLE+" (_id, wedding_name, wedding_location, wedding_details, bride, groom, invitation_img, accompanier, wedding_start, wedding_end)\n"+
+                "VALUES \n" +
+                "(1, 'Mehmet and Ayse', 'Ankara', 'No pets and non-alcohalic wedding', 'Ayse Bayraktar', 'Mehmet Burak', null, 1, 2023-01-20, 2023-01-21),\n" +
+                "(2, 'Cansu and Tayfur', 'Izmir', 'Alcohalic wedding, black and white theme', 'Cansu Bahar', 'Tayfur Sen', null, 2, 2023-06-01, 2023-06-05),\n" +
+                "(3, 'Feyza and Koray', 'Istanbul', 'Non-alcohalic wedding, No children', 'Feyza Korkmaz', 'Koray Celik', null, 0, 2023-05-25, 2023-05-26);\n");
+    }
+
+    //create fake wedding owner data
+    public void createFakeWeddingOwner(){
+        db.execSQL("INSERT INTO "+DATABASE_WEDDING_OWNER_TABLE+" (_id, user_id, wedding_id)\n"+  //user_id means the owner's id, the one who created the wedding event.
+                "VALUES \n" +
+                "(1, 2, 3),\n" +
+                "(2, 5, 2),\n" +
+                "(3, 1, 1);\n");
+    }
+
+    //create fake wedding guests data
+    public void createFakeWeddingGuests(){
+        db.execSQL("INSERT INTO "+DATABASE_WEDDING_GUEST_TABLE+" (_id, user_id, wedding_id, accompanier, will_come)\n"+ //user_id means the guests that haas an invitations.
+                "VALUES \n" +
+                "(1, 2, 3, 1, 1),\n" +  //will_come --> if 0 = not attending, if 1 = attending.
+                "(2, 5, 2, 2, 1),\n" +
+                "(3, 5, 1, 2, 1),\n" +
+                "(4, 5, 3, 2, 1),\n" +
+                "(5, 3, 3, 0, 0),\n" +
+                "(6, 4, 2, 1, 1),\n" +
+                "(7, 6, 1, 2, 1),\n" +
+                "(8, 7, 2, 1, 1),\n" +
+                "(9, 8, 3, 0, 0),\n" +
+                "(10, 9, 2, 1, 1),\n" +
+                "(12, 10, 1, 2, 0),\n" +
+                "(13, 11, 3, 2, 1),\n" +
+                "(11, 1, 1, 1, 1);\n");
+    }
+
+    //get the invited guests of a wedding
+    public ArrayList<Wedding> getInvitedWeddings(int user_id){
+        ArrayList<Wedding> weddingName = new ArrayList<>();
+
+        //select w.* from wedding as w left join wedding_guest as wg on w._id = wg.wedding_id where user_id= ?
+
+        String query_wo = "select user_id, wedding_id from " + DATABASE_WEDDING_GUEST_TABLE;
+        Cursor cursor_wo = db.rawQuery(query_wo, null);
+        System.out.println(" ======================== WEDDING TABLE ======================= ");
+        while (cursor_wo.moveToNext()) {
+            System.out.println("WEDDING ID: " + cursor_wo.getInt(0));
+            System.out.println("USER ID: " + cursor_wo.getInt(1));
+        }
+
+        String query_w = "select _id, wedding_name from " + DATABASE_WEDDING_TABLE;
+        Cursor cursor_w = db.rawQuery(query_w, null);
+        System.out.println(" ======================== WEDDING TABLE ======================= ");
+        while (cursor_w.moveToNext()) {
+            System.out.println("WEDDING ID: " + cursor_w.getInt(0));
+            System.out.println("WEDDING NAME: " + cursor_w.getString(1));
+        }
+        String query = " select w._id, w.bride, w.groom, w.wedding_name, w.wedding_location, w.wedding_details, w.invitation_img, " +
+                " w.accompanier, w.wedding_start, w.wedding_end from " + DATABASE_WEDDING_TABLE + " as w left join " + DATABASE_WEDDING_GUEST_TABLE
+                + " as wg on w._id = wg.wedding_id where wg.user_id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(user_id)});
+        // loop through the result set and add each row to the list
+        while (cursor.moveToNext()) {
+            Wedding wedding = new Wedding(
+                    cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getString(5),
+                    cursor.getString(6),
+                    cursor.getInt(7),
+                    cursor.getString(8),
+                    cursor.getString(9)
+            );
+            //weddingName.add(wedding.getWedding_name());
+            weddingName.add(wedding);
+        }
+        cursor.close();
+
+        return weddingName;
+    }
+
 }

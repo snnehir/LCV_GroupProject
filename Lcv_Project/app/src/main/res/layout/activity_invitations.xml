@@ -25,21 +25,14 @@
             android:layout_gravity="center">
 
         </TextView>
-<!--
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/seat_reservation_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Seat Reservation"
-            android:background="@color/constantColor"
-            android:textColor="@color/white"
-            android:padding="20dp"
-            android:layout_gravity="center_horizontal"/>
--->
+
+
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/list_view_invitations"/>
+            android:id="@+id/list_view_invitations"
+            android:clickable="true"
+            android:focusable="true"/>
 
     </LinearLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
