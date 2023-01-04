@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else{
                     Toast.makeText(MainActivity.this, "Login success.", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(this, CreateInvitationActivity.class));
+                    startActivity(new Intent(this, MyInvitations.class));
                 }
                 db.close();
                 break;

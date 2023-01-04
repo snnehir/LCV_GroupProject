@@ -13,11 +13,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,8 +42,6 @@ import java.util.Locale;
 
 public class CreateInvitationActivity extends AppCompatActivity {
 
-    private final int REQUEST_CODE_SELECT_IMAGE = 1;
-    Uri invitationImageUri;
     Context ctx;
     final Calendar myCalendar= Calendar.getInstance();
     EditText date_picker, startTime, endTime, name, bride, groom, location, details,
@@ -142,6 +142,11 @@ public class CreateInvitationActivity extends AppCompatActivity {
                         System.out.println("================== NAV: my profile");
                         startActivity(new Intent(ctx, ProfileActivity.class));
                         break;
+
+                    case R.id.bottom_nav_create_invitation:
+                        System.out.println("================== NAV: my invitations");
+                        startActivity(new Intent(ctx, MyInvitations.class));
+                        break;
                     default:
                         break;
                 }
@@ -158,14 +163,7 @@ public class CreateInvitationActivity extends AppCompatActivity {
 
     public void onClick(View view){
         switch (view.getId()){
-            case R.id.add_image_btn:
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_CODE_SELECT_IMAGE);
-                break;
             case R.id.save_btn:
-                // save the image to the internal storage
                 String wedding_name = name.getText().toString();
                 if(wedding_name == null || wedding_name.isEmpty()){
                     Toast.makeText(ctx, "Invitation name cannot be empty.", Toast.LENGTH_SHORT).show();
@@ -178,64 +176,21 @@ public class CreateInvitationActivity extends AppCompatActivity {
                 String location_str = location.getText().toString();
                 String details_str = details.getText().toString();
                 int accompanier_num = Integer.parseInt(numberOfAccompanier.getText().toString().isEmpty() ? "0" : numberOfAccompanier.getText().toString());
-                String invitation_img_url = "";
-                System.out.println("IMG URI: " + invitationImageUri);
-                if(invitationImageUri != null){
-                    try (InputStream inputStream = getContentResolver().openInputStream(invitationImageUri)) {
-                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                        File imageFile = new File(getFilesDir(), wedding_name + "_invitation_img.jpg");
-                        System.out.println(" ========================> img: " +imageFile.getPath());
-                        // save to db
-                        invitation_img_url = imageFile.getPath();
-
-                        try (FileOutputStream fos = new FileOutputStream(imageFile)) {
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
 
                 Wedding wedding = new Wedding(bride_name, groom_name, wedding_name, location_str,
-                                              details_str, invitation_img_url, accompanier_num,
+                                              details_str, accompanier_num,
                                               weddingStart, weddingEnd);
                 DBAdapter db = new DBAdapter(ctx);
                 db.open();
                 db.addWedding(wedding, logged_in_user.getUserId());
                 db.close();
                 Toast.makeText(ctx, "Invitation is created!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(ctx, MyInvitations.class));
+
+                startActivity(new Intent(ctx, CongratualationsActivity.class));
                 break;
         }
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_SELECT_IMAGE && resultCode == RESULT_OK && data != null) {
-            // get the selected image
-            invitationImageUri = data.getData();
-            // display the image
-            ImageView imageView = findViewById(R.id.invitation_img);
-            imageView.setImageURI(invitationImageUri);
-            /*
-            // save the image to the internal storage
-            try (InputStream inputStream = getContentResolver().openInputStream(imageUri)) {
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                File imageFile = new File(getFilesDir(), "image.jpg");
-                System.out.println(" ========================> img: " +imageFile.getPath());
-                try (FileOutputStream fos = new FileOutputStream(imageFile)) {
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            */
-        }
-    }
+
 
 
 

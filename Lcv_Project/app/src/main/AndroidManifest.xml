@@ -16,6 +16,13 @@
         android:theme="@style/Theme.Lcv_Project"
         tools:targetApi="31">
         <activity
+            android:name=".CongratualationsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".MyInvitations"
             android:exported="false">
             <meta-data

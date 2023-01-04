@@ -2,32 +2,30 @@ package com.example.lcv_project.Models;
 
 public class Wedding {
     private int weddingId;
-    private String bride, groom, wedding_name, wedding_location, wedding_details, invitation_img_url;
+    private String bride, groom, wedding_name, wedding_location, wedding_details;
     private int accompanier_num;    // max. number of guest can other guest bring
     private String weddingStart, weddingEnd;
 
     public Wedding(String bride, String groom, String weddingName, String weddingLocation,
-                   String weddingDetails, String invitation_img_url, int accompanier_num, String weddingStart, String weddingEnd) {
+                   String weddingDetails, int accompanier_num, String weddingStart, String weddingEnd) {
         this.bride = bride;
         this.groom = groom;
         this.wedding_name = weddingName;
         this.wedding_location = weddingLocation;
         this.wedding_details = weddingDetails;
-        this.invitation_img_url = invitation_img_url;
         this.accompanier_num = accompanier_num;
         this.weddingStart = weddingStart;
         this.weddingEnd = weddingEnd;
     }
 
     public Wedding(int weddingId, String bride, String groom, String weddingName, String weddingLocation,
-                   String weddingDetails, String invitation_img_url, int accompanier_num, String weddingStart, String weddingEnd) {
+                   String weddingDetails, int accompanier_num, String weddingStart, String weddingEnd) {
         this.weddingId = weddingId;
         this.bride = bride;
         this.groom = groom;
         this.wedding_name = weddingName;
         this.wedding_location = weddingLocation;
         this.wedding_details = weddingDetails;
-        this.invitation_img_url = invitation_img_url;
         this.accompanier_num = accompanier_num;
         this.weddingStart = weddingStart;
         this.weddingEnd = weddingEnd;
@@ -56,9 +54,6 @@ public class Wedding {
         this.wedding_details = wedding_details;
     }
 
-    public void setInvitation_img_url(String invitation_img_url) {
-        this.invitation_img_url = invitation_img_url;
-    }
 
     public void setAccompanier_num(int accompanier_num) {
         this.accompanier_num = accompanier_num;
@@ -88,9 +83,6 @@ public class Wedding {
         return wedding_details;
     }
 
-    public String getInvitation_img_url() {
-        return invitation_img_url;
-    }
 
     public int getAccompanier_num() {
         return accompanier_num;
@@ -113,7 +105,6 @@ public class Wedding {
                 ", wedding_name='" + wedding_name + '\'' +
                 ", wedding_location='" + wedding_location + '\'' +
                 ", wedding_details='" + wedding_details + '\'' +
-                ", invitation_img_url='" + invitation_img_url + '\'' +
                 ", accompanier_num=" + accompanier_num +
                 ", weddingStart='" + weddingStart + '\'' +
                 ", weddingEnd='" + weddingEnd + '\'' +

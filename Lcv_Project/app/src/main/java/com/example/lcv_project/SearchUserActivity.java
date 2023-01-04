@@ -88,7 +88,12 @@ public class SearchUserActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         listView.setAdapter(customAdapter);
         listView.setLongClickable(true);
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                System.out.println(" TIKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK -----------------------------");
+            }
+        });
         // Set an OnItemLongClickListener on the ListView
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             boolean[] longPressed = new boolean[listView.getCount()];

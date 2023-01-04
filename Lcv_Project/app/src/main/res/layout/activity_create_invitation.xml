@@ -67,45 +67,6 @@
                 </EditText>
             </RelativeLayout>
 
-                <LinearLayout
-                    android:id="@+id/image_section"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/text4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:text="Invitation Image"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
-                        android:textSize="18dp"
-                        android:layout_marginRight="8dp"/>
-
-                    <ImageView
-                        android:id="@+id/invitation_img"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:src="@drawable/invitation_img"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/image_section"
-                        android:layout_alignParentEnd="true"/>
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/add_image_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16dp"
-                        android:text="Upload Image"
-                        android:onClick="onClick"
-                        />
-
-
-                </LinearLayout>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -314,6 +275,7 @@
                     android:inputType="number"/>
             </RelativeLayout>
 
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/save_btn"
                 android:layout_width="wrap_content"
@@ -325,8 +287,9 @@
                 android:textSize="18dp"
                 />
 
-
         </LinearLayout>
+
+
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -50,7 +50,7 @@ public class DBAdapter {
                     "    (_id integer primary key autoincrement, " +
                     "    wedding_name text unique not null, " +
                     "    wedding_location text, wedding_details text, bride text, groom text, " +
-                    "    invitation_img text, accompanier integer," +
+                    "    accompanier integer," +
                     "    wedding_start date, wedding_end date)";
     static final String DATABASE_CREATE_WEDDING_GUEST =
                     "    CREATE TABLE " + DATABASE_WEDDING_GUEST_TABLE +
@@ -155,7 +155,6 @@ public class DBAdapter {
         initialValues.put("wedding_name", wedding.getWedding_name());
         initialValues.put("wedding_location", wedding.getWedding_location());
         initialValues.put("wedding_details", wedding.getWedding_details());
-        initialValues.put("invitation_img", wedding.getInvitation_img_url());
         initialValues.put("accompanier", wedding.getAccompanier_num());
         initialValues.put("wedding_start", wedding.getWeddingStart());
         initialValues.put("wedding_end", wedding.getWeddingEnd());
@@ -253,7 +252,7 @@ public class DBAdapter {
             System.out.println("WEDDING ID: " + cursor_w.getInt(0));
             System.out.println("WEDDING NAME: " + cursor_w.getString(1));
         }
-        String query = " select w._id, w.bride, w.groom, w.wedding_name, w.wedding_location, w.wedding_details, w.invitation_img, " +
+        String query = " select w._id, w.bride, w.groom, w.wedding_name, w.wedding_location, w.wedding_details, " +
                 " w.accompanier, w.wedding_start, w.wedding_end from " + DATABASE_WEDDING_TABLE + " as w left join " + DATABASE_WEDDING_OWNER_TABLE
                 + " as wo on w._id = wo.wedding_id where wo.user_id = ?";
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(user_id)});
@@ -267,10 +266,9 @@ public class DBAdapter {
                     cursor.getString(3),
                     cursor.getString(4),
                     cursor.getString(5),
-                    cursor.getString(6),
-                    cursor.getInt(7),
-                    cursor.getString(8),
-                    cursor.getString(9)
+                    cursor.getInt(6),
+                    cursor.getString(7),
+                    cursor.getString(8)
             ));
         }
         cursor.close();
