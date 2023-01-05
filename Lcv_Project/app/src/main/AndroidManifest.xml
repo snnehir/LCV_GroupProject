@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Lcv_Project"
         tools:targetApi="31">
         <activity
-            android:name=".CongratualationsActivity"
+            android:name=".CongratulationsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

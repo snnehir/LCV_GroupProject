@@ -34,7 +34,6 @@ public class SignUpActivity extends AppCompatActivity {
     public void onClick(View view){
         switch (view.getId()){
             case R.id.btnSignup:
-                //Toast.makeText(SignUpActivity.this, "Signup attempt", Toast.LENGTH_SHORT).show();
                 String username = this.username.getText().toString();
                 String password = this.password.getText().toString();
                 String mail = this.mail.getText().toString();
@@ -44,7 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
                 User user = new User(full_name, username, mail, password);
                 long user_id = db.addUser(user);
                 db.close();
-                System.out.println(" >>>>>>>>> user_id: " + user_id);
+               
                 if(user_id == -1){
                     Toast.makeText(SignUpActivity.this, "Same email or username is used before.", Toast.LENGTH_SHORT).show();
                 }

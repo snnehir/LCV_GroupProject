@@ -6,23 +6,16 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lcv_project.Adapter.DBAdapter;
@@ -30,14 +23,8 @@ import com.example.lcv_project.Models.Wedding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class CreateInvitationActivity extends AppCompatActivity {
@@ -51,9 +38,6 @@ public class CreateInvitationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
-
-        /* Context ctx2 = getApplicationContext();
-        Configuration.getInstance().load(ctx2, PreferenceManager.getDefaultSharedPreferences(ctx2)); */
         setContentView(R.layout.activity_create_invitation);
         ctx = this;
 
@@ -95,7 +79,7 @@ public class CreateInvitationActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         startTime.setText( selectedHour + ":" + selectedMinute);
                     }
-                }, hour, minute, true);//Yes 24 hour time
+                }, hour, minute, true);
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
 
@@ -116,7 +100,7 @@ public class CreateInvitationActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         endTime.setText( selectedHour + ":" + selectedMinute);
                     }
-                }, hour, minute, true);//Yes 24 hour time
+                }, hour, minute, true);
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
 
@@ -124,6 +108,7 @@ public class CreateInvitationActivity extends AppCompatActivity {
         });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.bottom_nav_create_invitation);
         // Set an OnNavigationItemSelectedListener on the BottomNavigationView
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -131,20 +116,20 @@ public class CreateInvitationActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch(id){
                     case R.id.bottom_nav_search:
-                        System.out.println("================== NAV: search users");
+
                         startActivity(new Intent(ctx, SearchUserActivity.class));
                         break;
                     case R.id.bottom_nav_invitations:
-                        System.out.println("================== NAV: invitations");
+
                         startActivity(new Intent(ctx, InvitationsActivity.class));
                         break;
                     case R.id.bottom_nav_profile:
-                        System.out.println("================== NAV: my profile");
+
                         startActivity(new Intent(ctx, ProfileActivity.class));
                         break;
 
                     case R.id.bottom_nav_create_invitation:
-                        System.out.println("================== NAV: my invitations");
+                        
                         startActivity(new Intent(ctx, MyInvitations.class));
                         break;
                     default:
@@ -186,7 +171,7 @@ public class CreateInvitationActivity extends AppCompatActivity {
                 db.close();
                 Toast.makeText(ctx, "Invitation is created!", Toast.LENGTH_SHORT).show();
 
-                startActivity(new Intent(ctx, CongratualationsActivity.class));
+                startActivity(new Intent(ctx, CongratulationsActivity.class));
                 break;
         }
     }

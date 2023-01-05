@@ -98,16 +98,14 @@ public class Wedding {
 
     @Override
     public String toString() {
-        return "Wedding{" +
-                "weddingId=" + weddingId +
-                ", bride='" + bride + '\'' +
-                ", groom='" + groom + '\'' +
-                ", wedding_name='" + wedding_name + '\'' +
-                ", wedding_location='" + wedding_location + '\'' +
-                ", wedding_details='" + wedding_details + '\'' +
-                ", accompanier_num=" + accompanier_num +
-                ", weddingStart='" + weddingStart + '\'' +
-                ", weddingEnd='" + weddingEnd + '\'' +
-                '}';
+        return
+                "Bride: " + bride + "\n" +
+                "Groom: " + groom + '\n' +
+                "Wedding Name: " + wedding_name + '\n' +
+                "Location: " + wedding_location + '\n' +
+                "Wedding Details: " + wedding_details + '\n' +
+                "Number of People to Bring: " + accompanier_num + '\n' +
+                "Wedding Start: " + weddingStart + '\n' +
+                "Wedding End: " + weddingEnd + '\n';
     }
 }

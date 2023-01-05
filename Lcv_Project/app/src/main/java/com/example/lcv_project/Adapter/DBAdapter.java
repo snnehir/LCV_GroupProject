@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class DBAdapter {
     static final String TAG = "DBAdapter";
     static final String DATABASE_NAME = "Lcv_Project";
-    static final int DATABASE_VERSION = 5;
+    static final int DATABASE_VERSION = 6;
 
     // tables
 
@@ -51,7 +51,7 @@ public class DBAdapter {
                     "    wedding_name text unique not null, " +
                     "    wedding_location text, wedding_details text, bride text, groom text, " +
                     "    accompanier integer," +
-                    "    wedding_start date, wedding_end date)";
+                    "    wedding_start text, wedding_end text)";
     static final String DATABASE_CREATE_WEDDING_GUEST =
                     "    CREATE TABLE " + DATABASE_WEDDING_GUEST_TABLE +
                     "    (_id INTEGER PRIMARY KEY autoincrement,\n" +
@@ -107,7 +107,6 @@ public class DBAdapter {
             db.execSQL("DROP TABLE IF EXISTS " + DATABASE_WEDDING_GUEST_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + DATABASE_WEDDING_OWNER_TABLE);
             onCreate(db);
-            System.out.println(" ******************************** VER. CHANGED **********************************");
         }
     }
 
@@ -158,32 +157,13 @@ public class DBAdapter {
         initialValues.put("accompanier", wedding.getAccompanier_num());
         initialValues.put("wedding_start", wedding.getWeddingStart());
         initialValues.put("wedding_end", wedding.getWeddingEnd());
-        System.out.println(" ================ wedding added ==================");
-        System.out.println(wedding);
+
         // add wedding-owner relation
         long wedding_id = db.insert(DATABASE_WEDDING_TABLE, null, initialValues);
         ContentValues initialValues2 = new ContentValues();
         initialValues2.put("user_id", String.valueOf(user_id));
         initialValues2.put("wedding_id", String.valueOf(wedding_id));
         db.insert(DATABASE_WEDDING_OWNER_TABLE, null, initialValues2);
-
-        System.out.println(" ================ wedding owner added ==================");
-
-        String query_wo = "select wedding_id, user_id from " + DATABASE_WEDDING_OWNER_TABLE;
-        Cursor cursor_wo = db.rawQuery(query_wo, null);
-        System.out.println(" ======================== WEDDING OWNER TABLE add ======================= ");
-        while (cursor_wo.moveToNext()) {
-            System.out.println("WEDDING ID: " + cursor_wo.getInt(0));
-            System.out.println("USER ID: " + cursor_wo.getInt(1));
-        }
-
-        String query_w = "select _id, wedding_name from " + DATABASE_WEDDING_TABLE;
-        Cursor cursor_w = db.rawQuery(query_w, null);
-        System.out.println(" ======================== WEDDING TABLE add ======================= ");
-        while (cursor_w.moveToNext()) {
-            System.out.println("WEDDING ID: " + cursor_w.getInt(0));
-            System.out.println("WEDDING NAME: " + cursor_w.getString(1));
-        }
 
     }
     // check whether user login params are matching
@@ -194,11 +174,7 @@ public class DBAdapter {
         if (cursor.moveToFirst()) {
             user = new User(cursor.getInt(0), cursor.getString(1),
                             cursor.getString(2), cursor.getString(3), cursor.getString(4));
-            System.out.println(" ====================== login user: " + user);
             cursor.close();
-        }
-        else{
-            System.out.println(" ====================== login user: null ");
         }
         return user;
     }
@@ -222,7 +198,7 @@ public class DBAdapter {
         ArrayList<UserListItem> userList = new ArrayList<>();
         // loop through the result set and add each row to the list
         while (cursor.moveToNext()) {
-            // System.out.println("============= elements: " + cursor.getString(0));
+
             userList.add(new UserListItem(
                     cursor.getString(0),
                     cursor.getString(1),
@@ -232,26 +208,12 @@ public class DBAdapter {
             ));
         }
         cursor.close();
+
         return userList;
 
     }
 
     public ArrayList<Wedding> getWeddingsOfUser(int user_id){
-        String query_wo = "select wedding_id, user_id from " + DATABASE_WEDDING_OWNER_TABLE;
-        Cursor cursor_wo = db.rawQuery(query_wo, null);
-        System.out.println(" ======================== WEDDING OWNER TABLE ======================= ");
-        while (cursor_wo.moveToNext()) {
-            System.out.println("WEDDING ID: " + cursor_wo.getInt(0));
-            System.out.println("USER ID: " + cursor_wo.getInt(1));
-        }
-
-        String query_w = "select _id, wedding_name from " + DATABASE_WEDDING_TABLE;
-        Cursor cursor_w = db.rawQuery(query_w, null);
-        System.out.println(" ======================== WEDDING TABLE ======================= ");
-        while (cursor_w.moveToNext()) {
-            System.out.println("WEDDING ID: " + cursor_w.getInt(0));
-            System.out.println("WEDDING NAME: " + cursor_w.getString(1));
-        }
         String query = " select w._id, w.bride, w.groom, w.wedding_name, w.wedding_location, w.wedding_details, " +
                 " w.accompanier, w.wedding_start, w.wedding_end from " + DATABASE_WEDDING_TABLE + " as w left join " + DATABASE_WEDDING_OWNER_TABLE
                 + " as wo on w._id = wo.wedding_id where wo.user_id = ?";
@@ -294,9 +256,9 @@ public class DBAdapter {
                 "  (2, 'selcans', 'password', 'user2@example.com', 'Selcan Sarıarslan', null),\n" +
                 "  (3, 'muq_the_star', 'password', 'user3@example.com', 'Muqadasa Sherani', null),\n" +
                 "  (4, 'mumbi_r', 'password', 'user4@example.com', 'Regina Mumbi Gachomba', null),\n" +
-                "  (5, 'snur21', '1234', 'snur21@mail.com', 'Sumeyye Nur Nehir', null),\n" +
+                "  (5, 'makbas99', '1234', 'akbas@gmail.com', 'Mustafa Akbaş', null),\n" +
                 "  (6, 'theq', 'password', 'user6@example.com', 'Ji Chang Min', null),\n" +
-                "  (7, 'm_akbas', 'password', 'user7@example.com', 'Mustafa Akbaş', null),\n" +
+                "  (7, 'snur21', 'password', 'user7@example.com', 'Sümeyye Nur Nehir', null),\n" +
                 "  (8, 'jia', 'password', 'user8@example.com', 'Jia Chang', null),\n" +
                 "  (9, 'serhan35', 'password', 'user9@example.com', 'Serhan Günaç', null),\n" +
                 "  (10, 'hjkim99', 'password', 'user10@example.com', 'Hongjoong Kim', null),\n" +
@@ -308,9 +270,9 @@ public class DBAdapter {
     public void createFakeWeddingData(){
         db.execSQL("INSERT INTO "+DATABASE_WEDDING_TABLE+" (_id, wedding_name, wedding_location, wedding_details, bride, groom, accompanier, wedding_start, wedding_end)\n"+
                 "VALUES \n" +
-                "(1, 'Mehmet and Ayse', 'Ankara', 'No pets and non-alcohalic wedding', 'Ayse Bayraktar', 'Mehmet Burak', 1, 2023-01-20, 2023-01-21),\n" +
-                "(2, 'Cansu and Tayfur', 'Izmir', 'Alcohalic wedding, black and white theme', 'Cansu Bahar', 'Tayfur Sen', 2, 2023-06-01, 2023-06-05),\n" +
-                "(3, 'Feyza and Koray', 'Istanbul', 'Non-alcohalic wedding, No children', 'Feyza Korkmaz', 'Koray Celik', 0, 2023-05-25, 2023-05-26);\n");
+                "(1, 'Mehmet and Ayse', 'Ankara', 'No pets and non-alcohalic wedding', 'Ayse Bayraktar', 'Mehmet Burak', 1, '2023-01-20', '2023-01-21'),\n" +
+                "(2, 'Serap and Hakan', 'Izmir', 'Alcohalic wedding, black and white theme', 'Cansu Bahar', 'Tayfur Sen', 2, '2023-06-01', '2023-06-05'),\n" +
+                "(3, 'Feyza and Koray', 'Istanbul', 'Non-alcohalic wedding, No children', 'Feyza Korkmaz', 'Koray Celik', 0, '2023-05-25', '2023-05-26');\n");
     }
 
     //create fake wedding owner data
@@ -345,23 +307,7 @@ public class DBAdapter {
     public ArrayList<Wedding> getInvitedWeddings(int user_id){
         ArrayList<Wedding> weddingName = new ArrayList<>();
 
-        //select w.* from wedding as w left join wedding_guest as wg on w._id = wg.wedding_id where user_id= ?
 
-        String query_wo = "select user_id, wedding_id from " + DATABASE_WEDDING_GUEST_TABLE;
-        Cursor cursor_wo = db.rawQuery(query_wo, null);
-        System.out.println(" ======================== WEDDING TABLE ======================= ");
-        while (cursor_wo.moveToNext()) {
-            System.out.println("WEDDING ID: " + cursor_wo.getInt(0));
-            System.out.println("USER ID: " + cursor_wo.getInt(1));
-        }
-
-        String query_w = "select _id, wedding_name from " + DATABASE_WEDDING_TABLE;
-        Cursor cursor_w = db.rawQuery(query_w, null);
-        System.out.println(" ======================== WEDDING TABLE ======================= ");
-        while (cursor_w.moveToNext()) {
-            System.out.println("WEDDING ID: " + cursor_w.getInt(0));
-            System.out.println("WEDDING NAME: " + cursor_w.getString(1));
-        }
         String query = " select w._id, w.bride, w.groom, w.wedding_name, w.wedding_location, w.wedding_details, " +
                 " w.accompanier, w.wedding_start, w.wedding_end from " + DATABASE_WEDDING_TABLE + " as w left join " + DATABASE_WEDDING_GUEST_TABLE
                 + " as wg on w._id = wg.wedding_id where wg.user_id = ?";

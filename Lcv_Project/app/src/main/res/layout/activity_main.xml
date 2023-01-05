@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/ic_launcher" />
 
     <EditText
         android:id="@+id/username_or_mail"
@@ -50,7 +50,7 @@
         android:drawableLeft="@drawable/lock"
         android:ems="10"
         android:hint="Password"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:padding="10dp"
         android:textColorHint="@color/black_500"
         android:textColor="@color/black"

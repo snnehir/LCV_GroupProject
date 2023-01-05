@@ -4,18 +4,21 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.GridLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class SeatReservationActivity extends AppCompatActivity {
 
     GridLayout mainGrid;
     int numberOfReservedSeats;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +47,12 @@ public class SeatReservationActivity extends AppCompatActivity {
 
                                 //count the selected seats
                                 numberOfReservedSeats++;
-                                Toast.makeText(SeatReservationActivity.this, "You Selected Seat Number :" + (finalIndex + 1), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SeatReservationActivity.this, "You Selected a Seat", Toast.LENGTH_SHORT).show();
                             } else {
                                 //Change background color
                                 cardView.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
                                 numberOfReservedSeats--;
-                                Toast.makeText(SeatReservationActivity.this, "You Unselected Seat Number :" + (finalIndex + 1), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SeatReservationActivity.this, "You Unselected a Seat", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -59,8 +62,14 @@ public class SeatReservationActivity extends AppCompatActivity {
     public void reserveButtonOnClick(View view) {
         AlertDialog.Builder dialogBox = new AlertDialog.Builder(this);
         dialogBox.setTitle("Seat Reservation");
-        dialogBox.setMessage("You have selected "+numberOfReservedSeats+" number of seats.");
-        dialogBox.setNeutralButton("OK", null);
+        dialogBox.setMessage("You have selected "+numberOfReservedSeats * -1 +" number of seats.");
+        dialogBox.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //attend button redirects to seat reservation activity
+                startActivity(new Intent(SeatReservationActivity.this, InvitationsActivity.class));
+            }
+        });
         dialogBox.create();
         dialogBox.show();
     }

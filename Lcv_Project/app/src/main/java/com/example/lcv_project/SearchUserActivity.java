@@ -11,7 +11,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -57,15 +56,12 @@ public class SearchUserActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch(id){
                     case R.id.bottom_nav_create_invitation:
-                        System.out.println("================== NAV: create invitation");
-                        startActivity(new Intent(ctx, CreateInvitationActivity.class));
+                        startActivity(new Intent(ctx, MyInvitations.class));
                         break;
                     case R.id.bottom_nav_invitations:
-                        System.out.println("================== NAV: invitations");
                         startActivity(new Intent(ctx, InvitationsActivity.class));
                         break;
                     case R.id.bottom_nav_profile:
-                        System.out.println("================== NAV: my profile");
                         startActivity(new Intent(ctx, ProfileActivity.class));
                         break;
                     default:
@@ -88,12 +84,7 @@ public class SearchUserActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         listView.setAdapter(customAdapter);
         listView.setLongClickable(true);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println(" TIKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK -----------------------------");
-            }
-        });
+
         // Set an OnItemLongClickListener on the ListView
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             boolean[] longPressed = new boolean[listView.getCount()];
@@ -103,7 +94,6 @@ public class SearchUserActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> arg0, View view,
                                            int pos, long id) {
                 if(longPressed[pos]){
-                    Log.v("==> long clicked 2","pos: " + pos);
                     LinearLayout userLayout = view.findViewById(R.id.user_layout);
                     userLayout.setBackgroundColor(Color.parseColor("white"));
 
@@ -114,7 +104,6 @@ public class SearchUserActivity extends AppCompatActivity {
                     longPressed[pos] = false;
                 }
                 else{
-                    Log.v("==> long clicked","pos: " + pos);
                     LinearLayout userLayout = view.findViewById(R.id.user_layout);
                     userLayout.setBackgroundColor(Color.parseColor("#f3e9f7"));
 
@@ -169,24 +158,22 @@ public class SearchUserActivity extends AppCompatActivity {
                 builder.setView(input);
 
                 Spinner spinner = new Spinner(ctx);
-                // TODO: fill it from sqlite (weddings)
+
                 ArrayList<String> items = new ArrayList<>();
-                items.add("Item 1");
-                items.add("Item 2");
-                items.add("Item 3");
+                items.add("Serap and Hakan");
+                items.add("My Wedding");
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
                 builder.setView(spinner);
-                // TODO: edittext not displayed
 
                 // Set the send button and its click listener
                 builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO: selected users -> guests
+
                     }
                 });
 

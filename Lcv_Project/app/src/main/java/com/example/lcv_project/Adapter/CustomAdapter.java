@@ -32,7 +32,6 @@ public class CustomAdapter extends ArrayAdapter<UserListItem> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         convertView = layoutInflater.inflate(resource,parent,false);
-
         ImageView profile_img = convertView.findViewById(R.id.profile_img);
         String img_url = objects.get(position).getProfile_picture_url();
         int res_id;
@@ -57,7 +56,4 @@ public class CustomAdapter extends ArrayAdapter<UserListItem> {
 
         return convertView;
     }
-
-
-
 }

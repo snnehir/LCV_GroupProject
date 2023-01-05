@@ -31,7 +31,6 @@ public class InvitationsActivity extends AppCompatActivity {
     //Button seatReservationBtn;
     Button attendBtn;
     Button notAttendBtn;
-    Button viewDetailBtn;
     TextView weddingNameTv;
     ListView invitationList;
     DBAdapter dbAdapter;
@@ -57,11 +56,7 @@ public class InvitationsActivity extends AppCompatActivity {
 
         dbAdapter = new DBAdapter(context);
         dbAdapter.open();
-        weddingsArraylist = dbAdapter.getInvitedWeddings(logged_in_user.getUserId()); //method
-        /*
-        for (int i=0; i< weddingsArraylist.size(); i++){
-            invitationListAdapter.add(weddingsArraylist.get(i));
-        }*/
+        weddingsArraylist = dbAdapter.getInvitedWeddings(logged_in_user.getUserId());
         //
         invitationListAdapter.addAll(weddingsArraylist);
         dbAdapter.close();
@@ -71,21 +66,11 @@ public class InvitationsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 Wedding selectedwedding = (Wedding) invitationList.getAdapter().getItem(i);
-                System.out.println("----------------------------------+"+ selectedwedding.toString() +"----------------------------");
                 displayAlertBox(selectedwedding.toString());
 
             }
         });
-/*
-        //attend button redirects to seat reservation activity
-        attendBtn = findViewById(R.id.invitation_list_attend_btn);
-        attendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(context, SeatReservationActivity.class));
-            }
-        });
-*/
+
         //bottom navigation bar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.bottom_nav_invitations);
@@ -96,15 +81,15 @@ public class InvitationsActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch(id){
                     case R.id.bottom_nav_search:
-                        System.out.println("================== NAV: search users");
+
                         startActivity(new Intent(context, SearchUserActivity.class));
                         break;
                     case R.id.bottom_nav_create_invitation:
-                        System.out.println("================== NAV: create invitation");
-                        startActivity(new Intent(context, CreateInvitationActivity.class));
+
+                        startActivity(new Intent(context, MyInvitations.class));
                         break;
                     case R.id.bottom_nav_profile:
-                        System.out.println("================== NAV: my profile");
+
                         startActivity(new Intent(context, ProfileActivity.class));
                         break;
                     default:

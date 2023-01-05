@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.lcv_project.Adapter.DBAdapter;
-import com.example.lcv_project.Models.User;
+import com.example.lcv_project.Models.User;;
 
 // Login page
 public class MainActivity extends AppCompatActivity {
@@ -36,24 +36,20 @@ public class MainActivity extends AppCompatActivity {
         DBAdapter db = new DBAdapter(this);
         db.open();
         db.clearTable();
-        // create fake data TODO: wedding
+        // create fake data
         db.createFakeData();
         db.createFakeWeddingData();
         db.createFakeWeddingGuests();
         db.createFakeWeddingOwner();
         db.close();
 
-
-
     }
     public void onClick(View view){
         switch (view.getId()){
             case R.id.btnLogin:
-                //Toast.makeText(MainActivity.this, "Login attempt", Toast.LENGTH_SHORT).show();
                 String username_or_mail = this.username_or_mail.getText().toString().isEmpty() ? "" : this.username_or_mail.getText().toString();
                 String password = this.password.getText().toString().isEmpty() ? "" : this.password.getText().toString();
-                System.out.println(" =================== username: " + username_or_mail);
-                System.out.println(" =================== password: " + password);
+
                 DBAdapter db = new DBAdapter(this);
                 db.open();
                 logged_in_user = db.loginUser(username_or_mail, password);

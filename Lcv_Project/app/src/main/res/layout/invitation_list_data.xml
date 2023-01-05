@@ -10,33 +10,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="18dp"
             android:layout_marginTop="10dp"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/invitation_list_attend_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Attend"
-            android:focusable="false"
-            android:background="@color/constantColor"
-            android:textColor="@color/white"
-            android:padding="10dp"
-            android:textAllCaps="false"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/invitation_list_not_attend_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Not Attend"
-            android:focusable="false"
-            android:background="@color/constantColor"
-            android:textColor="@color/white"
-            android:padding="10dp"
-            android:textAllCaps="false"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"/>
 
 
 </LinearLayout>

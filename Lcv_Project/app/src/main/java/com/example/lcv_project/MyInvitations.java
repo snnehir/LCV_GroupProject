@@ -2,19 +2,19 @@ package com.example.lcv_project;
 
 import static com.example.lcv_project.MainActivity.logged_in_user;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lcv_project.Adapter.DBAdapter;
 import com.example.lcv_project.Adapter.InvitationAdapter;
@@ -51,14 +51,13 @@ public class MyInvitations extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Get the item that was clicked
                 Wedding item = (Wedding) parent.getItemAtPosition(position);
-                // Do something with the item
-                Toast.makeText(getApplicationContext(), "Item Clicked: " + item, Toast.LENGTH_SHORT).show();
+                displayAlertBox(item.toString());
             }
         });
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.bottom_nav_search);
+        bottomNavigationView.setSelectedItemId(R.id.bottom_nav_create_invitation);
         // Set an OnNavigationItemSelectedListener on the BottomNavigationView
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -66,15 +65,15 @@ public class MyInvitations extends AppCompatActivity {
                 int id = item.getItemId();
                 switch(id){
                     case R.id.bottom_nav_search:
-                        System.out.println("================== NAV: search invitation");
+
                         startActivity(new Intent(ctx, SearchUserActivity.class));
                         break;
                     case R.id.bottom_nav_invitations:
-                        System.out.println("================== NAV: invitations");
+
                         startActivity(new Intent(ctx, InvitationsActivity.class));
                         break;
                     case R.id.bottom_nav_profile:
-                        System.out.println("================== NAV: my profile");
+
                         startActivity(new Intent(ctx, ProfileActivity.class));
                         break;
                     default:
@@ -93,5 +92,22 @@ public class MyInvitations extends AppCompatActivity {
                 break;
         }
 
+    }
+
+    public void displayAlertBox (String weddingString){
+        AlertDialog.Builder mydialog = new AlertDialog.Builder(ctx);
+        mydialog.setTitle("Wedding Detail");
+        mydialog.setMessage(weddingString);
+
+        mydialog.setNeutralButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+
+            }
+        });
+
+        AlertDialog dialog = mydialog.create();
+        dialog.show();
     }
 }
